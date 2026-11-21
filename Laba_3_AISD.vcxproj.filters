@@ -26,5 +26,17 @@
     <ClInclude Include="BinaryTree.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="TreeParser.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="DoublyLinkedList.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicList.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Stack.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

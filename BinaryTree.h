@@ -14,6 +14,11 @@ private:
         return getNode(node->left, value);
     }
 
+    void setRoot(TreeNode<T>* newNode) {
+        clear(root);
+        root = newNode;
+    }
+
     TreeNode<T>* add(TreeNode<T>* node, T& value) {
         if (node == nullptr) {
             return new TreeNode<T>(value);

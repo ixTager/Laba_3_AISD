@@ -127,7 +127,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryTree.h" />
+    <ClInclude Include="DoublyLinkedList.h" />
+    <ClInclude Include="DynamicList.h" />
+    <ClInclude Include="Stack.h" />
     <ClInclude Include="TreeNode.h" />
+    <ClInclude Include="TreeParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
