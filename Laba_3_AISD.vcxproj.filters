@@ -29,13 +29,10 @@
     <ClInclude Include="TreeParser.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="DoublyLinkedList.h">
+    <ClInclude Include="AVLTree.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="DynamicList.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="Stack.h">
+    <ClInclude Include="AVLNode.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
