@@ -8,12 +8,12 @@
 template<typename T>
 class TreeParser {
 private:
-    const std::string& expression;
+    std::string& expression;
     int position = 0;
 
     void skipSpaces() {
         while (position < expression.size() &&
-            std::isspace(static_cast<unsigned char>(expression[position]))) {
+            std::isspace((unsigned char) expression[position])) {
             position++;
         }
     }
@@ -27,7 +27,7 @@ private:
             position++;
         }
 
-        while (position < expression.size() && std::isdigit(static_cast<unsigned char>(expression[position]))) {
+        while (position < expression.size() && std::isdigit((unsigned char) expression[position])) {
             position++;
         }
 
@@ -35,7 +35,7 @@ private:
             throw std::runtime_error("Invalid node value");
         }
 
-        return static_cast<T>(std::stoi(expression.substr(start, position - start)));
+        return (T) std::stoi(expression.substr(start, position - start));
     }
 
     TreeNode<T>* parseNode() {

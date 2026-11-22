@@ -131,12 +131,16 @@ private:
     }
 
 public:
-    void insert(T& value) {
-        root = insert(root, value);
-    }
-
     void build(TreeNode<T>* source) {
         insertPreorder(source);
+    }
+    
+    AVLNode<T>* getRoot() {
+        return root;
+    }
+
+    void insert(T& value) {
+        root = insert(root, value);
     }
 
     int height() {
@@ -153,10 +157,6 @@ public:
 
     void printPostorder() {
         postorder(root);
-    }
-
-    AVLNode<T>* getRoot() {
-        return root;
     }
 
     ~AVLTree() {
