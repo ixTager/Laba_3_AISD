@@ -1,96 +1,83 @@
 #pragma once
-#include "TreeNode.h"
 
-template <typename T>
+#include "TreeNode.h"
+#include "DynamicArray.h"
+#include <iostream>
+
+template<typename T>
 class BinaryTree {
 private:
     TreeNode<T>* root = nullptr;
 
-    TreeNode<T>* getNode(TreeNode<T>* node, T& value) {
-        if (node == nullptr) return nullptr;
+    void preorder(TreeNode<T>* node, bool& first) {
+        if (!node) return;
 
-        if (value == node->value) return node;
-        if (value > node->value) return getNode(node->right, value);
-        return getNode(node->left, value);
-    }
+        if (!first) std::cout << ", ";
 
-    void setRoot(TreeNode<T>* newNode) {
-        clear(root);
-        root = newNode;
-    }
+        std::cout << node->value;
+        first = false;
 
-    TreeNode<T>* add(TreeNode<T>* node, T& value) {
-        if (node == nullptr) {
-            return new TreeNode<T>(value);
-        }
-        if (value < node->value) {
-            node->left = add(node->left, value);
-        }
-        else if (value > node->value) {
-            node->right = add(node->right, value);
-        }
-        return node;
-    }
-
-    TreeNode<T>* findMin(TreeNode<T>* node) {
-        while (node && node->left != nullptr) {
-            node = node->left;
-        }
-        return node;
-    }
-
-    TreeNode<T>* remove(TreeNode<T>* node, T& value) {
-        if (node == nullptr) return nullptr;
-
-        if (value < node->value) {
-            node->left = remove(node->left, value);
-        }
-        else if (value > node->value) {
-            node->right = remove(node->right, value);
-        }
-        else {
-            if (node->left == nullptr) {
-                TreeNode<T>* temp = node->right;
-                delete node;
-                return temp;
-            }
-            else if (node->right == nullptr) {
-                TreeNode<T>* temp = node->left;
-                delete node;
-                return temp;
-            }
-
-            TreeNode<T>* temp = findMin(node->right);
-            node->value = temp->value;
-            node->right = remove(node->right, temp->value);
-        }
-        return node;
+        preorder(node->left, first);
+        preorder(node->right, first);
     }
 
     void clear(TreeNode<T>* node) {
-        if (node == nullptr) return;
+        if (!node) return;
+
         clear(node->left);
         clear(node->right);
+
         delete node;
     }
 
 public:
     BinaryTree() = default;
 
-    TreeNode<T>* dfs(T& value) {
-        return getNode(root, value);
-    }
-
     void add(T& value) {
-        root = add(root, value);
+        TreeNode<T>* newNode = new TreeNode<T>(value);
+
+        if (!root) {
+            root = newNode;
+            return;
+        }
+
+        DynamicArray<TreeNode<T>*> queue;
+
+        queue.add(queue.size(), root);
+
+        while (queue.size() > 0) {
+            TreeNode<T>* node = queue.get(0);
+            queue.remove(0);
+
+            if (!node->left) {
+                node->left = newNode;
+                return;
+            }
+
+            queue.add(queue.size(), node->left);
+
+            if (!node->right) {
+                node->right = newNode;
+                return;
+            }
+
+            queue.add(queue.size(), node->right);
+        }
     }
 
-    void remove(T& value) {
-        root = remove(root, value);
+    TreeNode<T>* getRoot() {
+        return root;
+    }
+
+    void printPreorder() {
+        bool first = true;
+
+        preorder(root, first);
+
+        std::cout << '\n';
     }
 
     ~BinaryTree() {
         clear(root);
-        root = nullptr;
     }
 };

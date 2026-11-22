@@ -1,85 +1,18 @@
-﻿#include <iostream>
-#include <string>
-#include <algorithm>
-
-#include "TreeNode.h"
+﻿#include "TreeNode.h"
 #include "TreeParser.h"
 #include "AVLTree.h"
 
-using namespace std;
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <exception>
+
 
 template<typename T>
 int getBinaryHeight(TreeNode<T>* node) {
     if (!node) return 0;
 
-    return 1 + max(getBinaryHeight(node->left), getBinaryHeight(node->right));
-}
-
-template<typename T>
-void bfs(AVLNode<T>* root) {
-    if (!root) {
-        cout << endl;
-        return;
-    }
-
-    AVLNode<T>** queue = new AVLNode<T>*[100000];
-    int front = 0;
-    int rear = 0;
-
-    queue[rear++] = root;
-
-    bool first = true;
-
-    while (front < rear) {
-        AVLNode<T>* node = queue[front++];
-
-        if (!first) cout << ", ";
-        cout << node->value;
-        first = false;
-
-        if (node->left) queue[rear++] = node->left;
-        if (node->right) queue[rear++] = node->right;
-    }
-
-    delete[] queue;
-    cout << endl;
-}
-
-template<typename T>
-void printPreorder(AVLNode<T>* node, bool& first) {
-    if (!node) return;
-
-    if (!first) cout << ", ";
-    cout << node->value;
-    first = false;
-
-    printPreorder(node->left, first);
-    printPreorder(node->right, first);
-}
-
-template<typename T>
-void printInorder(AVLNode<T>* node, bool& first) {
-    if (!node) return;
-
-    printInorder(node->left, first);
-
-    if (!first) cout << ", ";
-    cout << node->value;
-    first = false;
-
-    printInorder(node->right, first);
-}
-
-template<typename T>
-void printPostorder(AVLNode<T>* node, bool& first) {
-    if (!node) return;
-
-    printPostorder(node->left, first);
-    printPostorder(node->right, first);
-
-    if (!first) cout << ", ";
-    cout << node->value;
-    first = false;
+    return 1 + std::max(getBinaryHeight(node->left), getBinaryHeight(node->right));
 }
 
 template<typename T>
@@ -93,47 +26,42 @@ void clearBinaryTree(TreeNode<T>* node) {
 }
 
 int main() {
-    string input;
+    std::string input;
 
-    if (!getline(cin, input)) {
+    if (!std::getline(std::cin, input)) {
         return 0;
     }
 
-    TreeNode<int>* originalRoot = nullptr;
+    TreeNode<int>* root = nullptr;
 
     try {
         TreeParser<int> parser(input);
-        originalRoot = parser.parse();
+        root = parser.parse();
 
-        int originalHeight = getBinaryHeight(originalRoot);
+        int inititalHeight = getBinaryHeight(root);
 
         AVLTree<int> avl;
-        avl.build(originalRoot);
+        avl.build(root);
 
-        cout << input << "\n\n";
+        std::cout << input << "\n\n";
 
-        cout << originalHeight << "\n";
-        cout << avl.height() << "\n";
+        std::cout << inititalHeight << '\n';
+        std::cout << avl.height() << '\n';
 
-        bfs(avl.getRoot());
+        avl.printBFS();
 
-        bool first = true;
-        printPreorder(avl.getRoot(), first);
-        cout << "\n";
+        avl.printDFSPreorder();
+        avl.printDFSInorder();
+        avl.printDFSPostorder();
 
-        first = true;
-        printInorder(avl.getRoot(), first);
-        cout << "\n";
-
-        first = true;
-        printPostorder(avl.getRoot(), first);
-        cout << "\n";
-
-        clearBinaryTree(originalRoot);
+        clearBinaryTree(root);
+        root = nullptr;
     }
-    catch (exception& e) {
-        clearBinaryTree(originalRoot);
-        cerr << e.what() << endl;
+    catch (std::exception& e) {
+        clearBinaryTree(root);
+
+        std::cerr << e.what() << '\n';
+
         return 1;
     }
 

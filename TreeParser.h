@@ -12,8 +12,7 @@ private:
     int position = 0;
 
     void skipSpaces() {
-        while (position < expression.size() &&
-            std::isspace((unsigned char) expression[position])) {
+        while (position < expression.size() && std::isspace((unsigned char) expression[position])) {
             position++;
         }
     }

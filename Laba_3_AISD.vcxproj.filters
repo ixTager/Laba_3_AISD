@@ -35,5 +35,14 @@
     <ClInclude Include="AVLNode.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="Stack.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="DoublyLinkedList.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicArray.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
